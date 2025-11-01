@@ -75,11 +75,11 @@ function coreSirds() {
 function draw() {
   var grayscale = document.getElementById('grayscale')
   var text = document.getElementById('text').value
-  var context = grayscale.getContext('2d')
-  context.clearRect(0, 0, grayscale.width, grayscale.height)
-  context.font = font + 'px sans-serif'
-  var text_width = context.measureText(text).width
-  context.fillText(text, (width - text_width) / 2, height / 2 + font / 2)
+  var canvas_grayscale = grayscale.getContext('2d')
+  canvas_grayscale.clearRect(0, 0, grayscale.width, grayscale.height)
+  canvas_grayscale.font = font + 'px sans-serif'
+  var text_width = canvas_grayscale.measureText(text).width
+  canvas_grayscale.fillText(text, (width - text_width) / 2, height / 2 + font / 2)
 
   var sirds = document.getElementById('sirds')
   var context_sirds = sirds.getContext('2d')
