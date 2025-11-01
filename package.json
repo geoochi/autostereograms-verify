@@ -1,12 +1,16 @@
 {
-  "packageManager": "pnpm@10.17.0",
   "name": "stereo-verify",
   "type": "module",
+  "packageManager": "pnpm@10.17.0",
+  "scripts": {
+    "dev": "node server.js"
+  },
   "dependencies": {
     "@napi-rs/canvas": "^0.1.81",
     "jsonwebtoken": "^9.0.2"
   },
   "devDependencies": {
-    "dotenv": "^17.2.3"
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0"
   }
 }
