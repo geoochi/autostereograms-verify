@@ -1,5 +1,4 @@
 import { createCanvas, ImageData } from '@napi-rs/canvas'
-import { writeFileSync } from 'fs'
 
 export default async function handler(req, res) {
   // 解析请求体获取文本
@@ -39,8 +38,6 @@ function core(text = null) {
   return canvas
 }
 
-// function main() {
-//   var canvas = core()
-//   writeFileSync('test.png', canvas.toBuffer('image/png'))
-// }
-// main()
+import { writeFileSync } from 'fs'
+var canvas = core()
+writeFileSync('test.png', canvas.toBuffer('image/png'))
