@@ -10,18 +10,13 @@ const __dirname = dirname(__filename)
 // 尝试注册字体文件（如果存在）
 // 支持多种常见字体路径
 const fontPaths = [
-  join(__dirname, '../fonts/DejaVuSans.ttf'),
-  join(__dirname, '../fonts/Arial.ttf'),
-  join(__dirname, '../fonts/NotoSans-Regular.ttf'),
-  '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf', // Linux
-  '/System/Library/Fonts/Helvetica.ttc', // macOS
-  'C:/Windows/Fonts/arial.ttf', // Windows
+  join(__dirname, '../fonts/CascadiaCode.ttf'),
 ]
 
 let fontRegistered = false
 for (const fontPath of fontPaths) {
   try {
-    GlobalFonts.registerFromPath(fontPath, 'SansSerif')
+    GlobalFonts.registerFromPath(fontPath, 'CascadiaCode')
     fontRegistered = true
     console.log('✓ Font registered successfully from:', fontPath)
     break
@@ -78,7 +73,7 @@ async function getCanvasSirds(text) {
   const context_grayscale = canvas_grayscale.getContext('2d')
   context_grayscale.clearRect(0, 0, canvas_grayscale.width, canvas_grayscale.height)
   // 使用注册的字体，如果已注册则使用 'SansSerif'，否则使用 'sans-serif'
-  const fontFamily = fontRegistered ? 'SansSerif' : 'sans-serif'
+  const fontFamily = fontRegistered ? 'CascadiaCode' : 'sans-serif'
   context_grayscale.font = FONT + 'px ' + fontFamily
   console.log(context_grayscale.font)
   let text_width = context_grayscale.measureText(text).width
