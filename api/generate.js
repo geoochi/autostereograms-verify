@@ -39,11 +39,6 @@ function getRandomValidCode() {
   return code
 }
 
-function getChineseValidCode() {
-  const validCharsList = ['云吞汤面', '飘香拌面', '刀削面', '牛肉面']
-  return validCharsList[Math.floor(Math.random() * validCharsList.length)]
-}
-
 function getRandom(x) {
   if (x <= 0) {
     return 0
@@ -128,7 +123,7 @@ function getCanvasSirds(text) {
 }
 
 // import { writeFileSync } from 'fs'
-// const code = getChineseValidCode()
+// const code = getRandomValidCode()
 // console.log(code)
 // const token = jwt.sign({ code }, JWT_SECRET, { expiresIn: '5m' })
 // console.log(token)
