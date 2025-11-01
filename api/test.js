@@ -9,7 +9,7 @@ GlobalFonts.registerFromPath(join(__dirname, '../fonts/CascadiaCode.ttf'), 'Casc
 
 export default async function handler(req, res) {
   const text = getRandomValidCode()
-  const canvas_sirds = await getCanvasSirds(text)
+  const canvas_sirds = getCanvasSirds(text)
   const dataURL = canvas_sirds.toDataURL()
   res.setHeader('Content-Type', 'application/json')
   res.json({ text, dataURL })
@@ -38,7 +38,7 @@ function getRandom(x) {
   }
 }
 
-async function getCanvasSirds(text) {
+function getCanvasSirds(text) {
   const WIDTH = 992
   const HEIGHT = 279
   const FONT = 180
@@ -115,7 +115,7 @@ async function getCanvasSirds(text) {
 
 // import { writeFileSync } from 'fs'
 // const text = getRandomValidCode()
-// const canvas_sirds = await getCanvasSirds(text)
+// const canvas_sirds = getCanvasSirds(text)
 // writeFileSync('test.png', canvas_sirds.toBuffer('image/png'))
 // console.log(canvas_sirds.toDataURL())
 // console.log(text)
