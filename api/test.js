@@ -1,4 +1,4 @@
-import { createCanvas, ImageData } from 'canvas'
+import { createCanvas, ImageData } from '@napi-rs/canvas'
 
 export default async function handler(req, res) {
   const width = 100
