@@ -1,4 +1,40 @@
-import { createCanvas } from '@napi-rs/canvas'
+import { createCanvas, GlobalFonts } from '@napi-rs/canvas'
+import { join } from 'path'
+import { fileURLToPath } from 'url'
+import { dirname } from 'path'
+
+// 获取当前文件的目录路径
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
+
+// 尝试注册字体文件（如果存在）
+// 支持多种常见字体路径
+const fontPaths = [
+  join(__dirname, '../fonts/DejaVuSans.ttf'),
+  join(__dirname, '../fonts/Arial.ttf'),
+  join(__dirname, '../fonts/NotoSans-Regular.ttf'),
+  '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf', // Linux
+  '/System/Library/Fonts/Helvetica.ttc', // macOS
+  'C:/Windows/Fonts/arial.ttf', // Windows
+]
+
+let fontRegistered = false
+for (const fontPath of fontPaths) {
+  try {
+    GlobalFonts.registerFromPath(fontPath, 'SansSerif')
+    fontRegistered = true
+    console.log('✓ Font registered successfully from:', fontPath)
+    break
+  } catch (e) {
+    // 继续尝试下一个路径
+    // console.log('Font path not found:', fontPath)
+  }
+}
+
+if (!fontRegistered) {
+  console.error('⚠️ No font file found. Text rendering will not work properly in Vercel.')
+  console.error('Font search paths attempted:', fontPaths)
+}
 
 export default async function handler(req, res) {
   const text = getRandomValidCode()
@@ -41,7 +77,9 @@ async function getCanvasSirds(text) {
   const canvas_grayscale = createCanvas(WIDTH, HEIGHT)
   const context_grayscale = canvas_grayscale.getContext('2d')
   context_grayscale.clearRect(0, 0, canvas_grayscale.width, canvas_grayscale.height)
-  context_grayscale.font = FONT + 'px sans-serif'
+  // 使用注册的字体，如果已注册则使用 'SansSerif'，否则使用 'sans-serif'
+  const fontFamily = fontRegistered ? 'SansSerif' : 'sans-serif'
+  context_grayscale.font = FONT + 'px ' + fontFamily
   console.log(context_grayscale.font)
   let text_width = context_grayscale.measureText(text).width
   console.log(text_width)
