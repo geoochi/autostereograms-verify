@@ -5,7 +5,7 @@ import verifyHandler from './api/verify.js'
 const app = express()
 const PORT = process.env.PORT || 3001
 app.use(express.json())
-app.use(express.static('.'))
+app.use(express.static('public'))
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*')
@@ -35,6 +35,11 @@ app.post('/api/verify', async (req, res) => {
       res.status(500).json({ error: 'Internal server error' })
     }
   }
+})
+
+// 404 handler - 必须在所有路由之后
+app.use((req, res) => {
+  res.status(404).sendFile('404.html', { root: 'public' })
 })
 
 app.listen(PORT, () => {

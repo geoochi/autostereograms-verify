@@ -1,4 +1,4 @@
-import '../config.js'
+import './config.js'
 import jwt from 'jsonwebtoken'
 
 // JWT secret key, read from environment variables (use .env locally, use Secrets on Vercel)
