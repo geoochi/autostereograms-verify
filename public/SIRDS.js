@@ -10,7 +10,7 @@ function myRandom(x) {
   }
 }
 
-function coreSirds() {
+function drawSirds() {
   var stereo_cycles = 5
   var alpha = 3
   var pattern_width = Math.floor(WIDTH / stereo_cycles)
@@ -72,7 +72,7 @@ function coreSirds() {
   }
 }
 
-function draw() {
+function drawGrayScale() {
   var text = document.getElementById('text').value
   var grayscale = document.getElementById('grayscale')
   var canvas_grayscale = grayscale.getContext('2d')
@@ -99,8 +99,8 @@ function main() {
   sirds.width = WIDTH
   sirds.height = HEIGHT
 
-  draw()
-  coreSirds()
+  drawGrayScale()
+  drawSirds()
 }
 
 main()
