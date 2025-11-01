@@ -37,7 +37,6 @@ app.post('/api/verify', async (req, res) => {
   }
 })
 
-// 404 handler - 必须在所有路由之后
 app.use((req, res) => {
   res.status(404).sendFile('404.html', { root: 'public' })
 })
