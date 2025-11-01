@@ -39,8 +39,8 @@ function core(text = null) {
   return canvas
 }
 
-function main() {
-  var canvas = core()
-  writeFileSync('test.png', canvas.toBuffer('image/png'))
-}
-main()
+// function main() {
+//   var canvas = core()
+//   writeFileSync('test.png', canvas.toBuffer('image/png'))
+// }
+// main()
