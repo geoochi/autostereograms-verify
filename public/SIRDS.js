@@ -1,92 +1,69 @@
-var $hx_exports = typeof exports != 'undefined' ? exports : typeof window != 'undefined' ? window : typeof self != 'undefined' ? self : this
-;(function ($global) {
-  'use strict'
-  var SIRDS = ($hx_exports['SIRDS'] = function () {})
-  SIRDS.main = function () {}
-  SIRDS.prototype = {
-    init: function () {},
-    update: function (width, height) {
-      var stereo_cycles = 5
-      var alpha = 3
-      var pattern_width = Math.floor(width / stereo_cycles)
-      var canvas_grayscale = window.document.getElementById('grayscale')
-      var canvas_sirds = window.document.getElementById('sirds')
-      var grayscale = canvas_grayscale.getContext('2d', null)
-      var sirds = canvas_sirds.getContext('2d', null)
-      sirds.clearRect(0, 0, width, height)
-      var _g = 0
-      var _g1 = width
-      while (_g < _g1) {
-        var i = _g++
-        var _g2 = 0
-        var _g3 = height
-        while (_g2 < _g3) {
-          var j = _g2++
-          var style = '#000000'
-          if (Std.random(3) != 0) {
-            style = '#FFFFFF'
-          }
-          sirds.fillStyle = style
-          sirds.fillRect(i, j, 1, 1)
-        }
-      }
-      var canvas_pattern = window.document.createElement('canvas')
-      canvas_pattern.width = pattern_width
-      canvas_pattern.height = height
-      var context_pattern = canvas_pattern.getContext('2d', null)
-      var pattern = context_pattern.getImageData(0, 0, pattern_width, height)
-      var pixel_displace = Math.floor(pattern_width / 20)
-      var _g = 0
-      var _g1 = stereo_cycles
-      while (_g < _g1) {
-        var c = _g++
-        var disparity = grayscale.getImageData(c * pattern_width + Math.floor(pattern_width / 2), 0, pattern_width, height)
-        var pattern_sirds = sirds.getImageData(c * pattern_width, 0, pattern_width, height)
-        var _g2 = 0
-        var _g3 = 4 * disparity.data.length
-        while (_g2 < _g3) {
-          var i = _g2++
-          pattern.data[i] = pattern_sirds.data[i]
-        }
-        var _g4 = 0
-        var _g5 = disparity.data.length
-        while (_g4 < _g5) {
-          var i1 = _g4++
-          pattern.data[i1 * 4 + alpha] = disparity.data[i1 * 4 + alpha] == 0 ? 255 : 0
-        }
-        context_pattern.putImageData(pattern, 0, 0)
-        sirds.drawImage(canvas_pattern, (c + 1) * pattern_width - pixel_displace * 0, 0)
-        var _g6 = 0
-        var _g7 = disparity.data.length
-        while (_g6 < _g7) {
-          var i2 = _g6++
-          pattern.data[i2 * 4 + alpha] = disparity.data[i2 * 4 + alpha] == 0 ? 0 : 255
-        }
-        context_pattern.putImageData(pattern, 0, 0)
-        sirds.drawImage(canvas_pattern, (c + 1) * pattern_width - pixel_displace, 0)
-      }
-    },
+function myRandom(x) {
+  if (x <= 0) {
+    return 0
+  } else {
+    return Math.floor(Math.random() * x)
   }
-  var Std = function () {}
-  Std.random = function (x) {
-    if (x <= 0) {
-      return 0
-    } else {
-      return Math.floor(Math.random() * x)
+}
+
+function coreSirds() {
+  var stereo_cycles = 5
+  var alpha = 3
+  var pattern_width = Math.floor(width / stereo_cycles)
+  var canvas_grayscale = window.document.getElementById('grayscale')
+  var canvas_sirds = window.document.getElementById('sirds')
+  var grayscale = canvas_grayscale.getContext('2d', null)
+  var sirds = canvas_sirds.getContext('2d', null)
+  sirds.clearRect(0, 0, width, height)
+  var _g = 0
+  var _g1 = width
+  while (_g < _g1) {
+    var i = _g++
+    var _g2 = 0
+    var _g3 = height
+    while (_g2 < _g3) {
+      var j = _g2++
+      var style = '#000000'
+      if (myRandom(3) != 0) {
+        style = '#FFFFFF'
+      }
+      sirds.fillStyle = style
+      sirds.fillRect(i, j, 1, 1)
     }
   }
-  var haxe_iterators_ArrayIterator = function (array) {
-    this.current = 0
-    this.array = array
+  var canvas_pattern = window.document.createElement('canvas')
+  canvas_pattern.width = pattern_width
+  canvas_pattern.height = height
+  var context_pattern = canvas_pattern.getContext('2d', null)
+  var pattern = context_pattern.getImageData(0, 0, pattern_width, height)
+  var pixel_displace = Math.floor(pattern_width / 20)
+  var _g = 0
+  var _g1 = stereo_cycles
+  while (_g < _g1) {
+    var c = _g++
+    var disparity = grayscale.getImageData(c * pattern_width + Math.floor(pattern_width / 2), 0, pattern_width, height)
+    var pattern_sirds = sirds.getImageData(c * pattern_width, 0, pattern_width, height)
+    var _g2 = 0
+    var _g3 = 4 * disparity.data.length
+    while (_g2 < _g3) {
+      var i = _g2++
+      pattern.data[i] = pattern_sirds.data[i]
+    }
+    var _g4 = 0
+    var _g5 = disparity.data.length
+    while (_g4 < _g5) {
+      var i1 = _g4++
+      pattern.data[i1 * 4 + alpha] = disparity.data[i1 * 4 + alpha] == 0 ? 255 : 0
+    }
+    context_pattern.putImageData(pattern, 0, 0)
+    sirds.drawImage(canvas_pattern, (c + 1) * pattern_width - pixel_displace * 0, 0)
+    var _g6 = 0
+    var _g7 = disparity.data.length
+    while (_g6 < _g7) {
+      var i2 = _g6++
+      pattern.data[i2 * 4 + alpha] = disparity.data[i2 * 4 + alpha] == 0 ? 0 : 255
+    }
+    context_pattern.putImageData(pattern, 0, 0)
+    sirds.drawImage(canvas_pattern, (c + 1) * pattern_width - pixel_displace, 0)
   }
-  haxe_iterators_ArrayIterator.prototype = {
-    hasNext: function () {
-      return this.current < this.array.length
-    },
-    next: function () {
-      return this.array[this.current++]
-    },
-  }
-  SIRDS.main()
-})({})
-var SIRDS = $hx_exports['SIRDS']
+}

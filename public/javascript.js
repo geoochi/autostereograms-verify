@@ -1,4 +1,3 @@
-var h
 function onload() {
   var search = window.location.search
   if (search != null && search.substr(0, 6) == '?text=') {
@@ -13,12 +12,6 @@ function onload() {
   sirds.width = width
   sirds.height = height
 
-  h = new SIRDS()
-  h.init()
-
   draw()
-  updateHaxe()
-}
-function updateHaxe() {
-  h.update(width, height)
+  coreSirds()
 }
