@@ -3,6 +3,10 @@
   "name": "stereo-verify",
   "type": "module",
   "dependencies": {
-    "@napi-rs/canvas": "^0.1.81"
+    "@napi-rs/canvas": "^0.1.81",
+    "jsonwebtoken": "^9.0.2"
+  },
+  "devDependencies": {
+    "dotenv": "^17.2.3"
   }
 }

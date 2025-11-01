@@ -1,18 +1,27 @@
+import './config.js'
 import { createCanvas, GlobalFonts } from '@napi-rs/canvas'
 import { join } from 'path'
 import { fileURLToPath } from 'url'
 import { dirname } from 'path'
+import jwt from 'jsonwebtoken'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 GlobalFonts.registerFromPath(join(__dirname, '../fonts/msyh.ttf'), 'myfont')
 
+// JWT 密钥，从环境变量读取（本地使用 .env，Vercel 使用 Secrets）
+const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production'
+
 export default async function handler(req, res) {
-  const text = getRandomValidCode()
-  const canvas_sirds = getCanvasSirds(text)
+  const code = getRandomValidCode()
+  const canvas_sirds = getCanvasSirds(code)
   const dataURL = canvas_sirds.toDataURL()
+  
+  // 使用 JWT 加密 code，设置 5 分钟过期时间
+  const token = jwt.sign({ code }, JWT_SECRET, { expiresIn: '5m' })
+  
   res.setHeader('Content-Type', 'application/json')
-  res.json({ text, dataURL })
+  res.json({ token, dataURL })
 }
 
 function getRandomValidCode() {
@@ -119,7 +128,9 @@ function getCanvasSirds(text) {
 }
 
 // import { writeFileSync } from 'fs'
-// const text = getChineseValidCode()
-// const canvas_sirds = getCanvasSirds(text)
-// console.log(text)
+// const code = getChineseValidCode()
+// console.log(code)
+// const token = jwt.sign({ code }, JWT_SECRET, { expiresIn: '5m' })
+// console.log(token)
+// const canvas_sirds = getCanvasSirds(code)
 // writeFileSync('test.png', canvas_sirds.toBuffer('image/png'))
