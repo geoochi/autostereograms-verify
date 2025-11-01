@@ -40,7 +40,9 @@ async function getCanvasSirds(text) {
   const context_grayscale = canvas_grayscale.getContext('2d')
   context_grayscale.clearRect(0, 0, canvas_grayscale.width, canvas_grayscale.height)
   context_grayscale.font = FONT + 'px sans-serif'
+  console.log(context_grayscale.font)
   const text_width = context_grayscale.measureText(text).width
+  console.log(text_width)
   context_grayscale.fillText(text, (WIDTH - text_width) / 2, HEIGHT / 2 + FONT / 2)
 
   const canvas_sirds = createCanvas(WIDTH, HEIGHT)
@@ -110,5 +112,3 @@ async function getCanvasSirds(text) {
 // const text = getRandomValidCode()
 // const canvas_sirds = await getCanvasSirds(text)
 // writeFileSync('test.png', canvas_sirds.toBuffer('image/png'))
-// console.log(canvas_sirds.toDataURL())
-// console.log(text)
