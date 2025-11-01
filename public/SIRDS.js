@@ -14,10 +14,10 @@ function drawSirds() {
   const stereo_cycles = 5
   const alpha = 3
   const pattern_width = Math.floor(WIDTH / stereo_cycles)
-  var canvas_grayscale = document.getElementById('grayscale')
-  var canvas_sirds = document.getElementById('sirds')
-  var context_grayscale = canvas_grayscale.getContext('2d', null)
-  var context_sirds = canvas_sirds.getContext('2d', null)
+  const canvas_grayscale = document.getElementById('grayscale')
+  const canvas_sirds = document.getElementById('sirds')
+  const context_grayscale = canvas_grayscale.getContext('2d', null)
+  const context_sirds = canvas_sirds.getContext('2d', null)
   context_sirds.clearRect(0, 0, WIDTH, HEIGHT)
   var _g = 0
   var _g1 = WIDTH
@@ -35,18 +35,18 @@ function drawSirds() {
       context_sirds.fillRect(i, j, 1, 1)
     }
   }
-  var canvas_pattern = document.createElement('canvas')
+  const canvas_pattern = document.createElement('canvas')
   canvas_pattern.width = pattern_width
   canvas_pattern.height = HEIGHT
-  var context_pattern = canvas_pattern.getContext('2d', null)
-  var pattern = context_pattern.getImageData(0, 0, pattern_width, HEIGHT)
-  var pixel_displace = Math.floor(pattern_width / 20)
+  const context_pattern = canvas_pattern.getContext('2d', null)
+  const pattern = context_pattern.getImageData(0, 0, pattern_width, HEIGHT)
+  const pixel_displace = Math.floor(pattern_width / 20)
   var _g = 0
   var _g1 = stereo_cycles
   while (_g < _g1) {
     var c = _g++
-    var disparity = context_grayscale.getImageData(c * pattern_width + Math.floor(pattern_width / 2), 0, pattern_width, HEIGHT)
-    var pattern_sirds = context_sirds.getImageData(c * pattern_width, 0, pattern_width, HEIGHT)
+    const disparity = context_grayscale.getImageData(c * pattern_width + Math.floor(pattern_width / 2), 0, pattern_width, HEIGHT)
+    const pattern_sirds = context_sirds.getImageData(c * pattern_width, 0, pattern_width, HEIGHT)
     var _g2 = 0
     var _g3 = 4 * disparity.data.length
     while (_g2 < _g3) {
