@@ -1,4 +1,11 @@
-import { createCanvas } from '@napi-rs/canvas'
+import { createCanvas, GlobalFonts } from '@napi-rs/canvas'
+import { join } from 'path'
+import { fileURLToPath } from 'url'
+import { dirname } from 'path'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
+GlobalFonts.registerFromPath(join(__dirname, '../fonts/CascadiaCode.ttf'), 'CascadiaCode')
 
 export default async function handler(req, res) {
   const text = getRandomValidCode()
@@ -39,7 +46,7 @@ async function getCanvasSirds(text) {
   const canvas_grayscale = createCanvas(WIDTH, HEIGHT)
   const context_grayscale = canvas_grayscale.getContext('2d')
   context_grayscale.clearRect(0, 0, canvas_grayscale.width, canvas_grayscale.height)
-  context_grayscale.font = FONT + 'px sans-serif'
+  context_grayscale.font = FONT + 'px CascadiaCode'
   const text_width = context_grayscale.measureText(text).width
   context_grayscale.fillText(text, (WIDTH - text_width) / 2, HEIGHT / 2 + FONT / 2)
 
