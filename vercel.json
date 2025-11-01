@@ -1,16 +1,6 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "api/**/*.js",
-      "use": "@vercel/node"
-    }
-  ],
-  "functions": {
-    "api/**/*.js": {
-      "includeFiles": ["node_modules/canvas/**"]
-    }
-  },
+  "builds": [{ "src": "api/**/*.js", "use": "@vercel/node" }],
   "installCommand": "pnpm install",
   "buildCommand": "pnpm approve-builds && pnpm run build"
 }
