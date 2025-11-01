@@ -3,33 +3,9 @@ import { join } from 'path'
 import { fileURLToPath } from 'url'
 import { dirname } from 'path'
 
-// 获取当前文件的目录路径
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
-
-// 尝试注册字体文件（如果存在）
-// 支持多种常见字体路径
-const fontPaths = [
-  join(__dirname, '../fonts/CascadiaCode.ttf'),
-]
-
-let fontRegistered = false
-for (const fontPath of fontPaths) {
-  try {
-    GlobalFonts.registerFromPath(fontPath, 'CascadiaCode')
-    fontRegistered = true
-    console.log('✓ Font registered successfully from:', fontPath)
-    break
-  } catch (e) {
-    // 继续尝试下一个路径
-    // console.log('Font path not found:', fontPath)
-  }
-}
-
-if (!fontRegistered) {
-  console.error('⚠️ No font file found. Text rendering will not work properly in Vercel.')
-  console.error('Font search paths attempted:', fontPaths)
-}
+GlobalFonts.registerFromPath(join(__dirname, '../fonts/CascadiaCode.ttf'), 'CascadiaCode')
 
 export default async function handler(req, res) {
   const text = getRandomValidCode()
@@ -67,28 +43,11 @@ async function getCanvasSirds(text) {
   const HEIGHT = 279
   const FONT = 180
 
-  console.log(text)
-
   const canvas_grayscale = createCanvas(WIDTH, HEIGHT)
   const context_grayscale = canvas_grayscale.getContext('2d')
   context_grayscale.clearRect(0, 0, canvas_grayscale.width, canvas_grayscale.height)
-  // 使用注册的字体，如果已注册则使用 'SansSerif'，否则使用 'sans-serif'
-  const fontFamily = fontRegistered ? 'CascadiaCode' : 'sans-serif'
-  context_grayscale.font = FONT + 'px ' + fontFamily
-  console.log(context_grayscale.font)
+  context_grayscale.font = FONT + 'px CascadiaCode'
   let text_width = context_grayscale.measureText(text).width
-  console.log(text_width)
-
-  // 如果 measureText 返回 0（通常在服务端环境中没有字体时会发生），
-  // 使用基于字符数和字体大小的估算方法
-  if (text_width === 0) {
-    // 估算文本宽度：根据本地测试结果（300-400 for 4 chars at 180px），
-    // 每个字符的平均宽度约为字体大小的 0.42-0.56 倍
-    // 使用 0.5 作为中间值
-    text_width = text.length * FONT * 0.5
-    console.log('Using estimated text width:', text_width)
-  }
-
   context_grayscale.fillText(text, (WIDTH - text_width) / 2, HEIGHT / 2 + FONT / 2)
 
   const canvas_sirds = createCanvas(WIDTH, HEIGHT)
