@@ -36,13 +36,26 @@ async function getCanvasSirds(text) {
   const HEIGHT = 279
   const FONT = 180
 
+  console.log(text)
+
   const canvas_grayscale = createCanvas(WIDTH, HEIGHT)
   const context_grayscale = canvas_grayscale.getContext('2d')
   context_grayscale.clearRect(0, 0, canvas_grayscale.width, canvas_grayscale.height)
   context_grayscale.font = FONT + 'px sans-serif'
   console.log(context_grayscale.font)
-  const text_width = context_grayscale.measureText(text).width
+  let text_width = context_grayscale.measureText(text).width
   console.log(text_width)
+
+  // 如果 measureText 返回 0（通常在服务端环境中没有字体时会发生），
+  // 使用基于字符数和字体大小的估算方法
+  if (text_width === 0) {
+    // 估算文本宽度：根据本地测试结果（300-400 for 4 chars at 180px），
+    // 每个字符的平均宽度约为字体大小的 0.42-0.56 倍
+    // 使用 0.5 作为中间值
+    text_width = text.length * FONT * 0.5
+    console.log('Using estimated text width:', text_width)
+  }
+
   context_grayscale.fillText(text, (WIDTH - text_width) / 2, HEIGHT / 2 + FONT / 2)
 
   const canvas_sirds = createCanvas(WIDTH, HEIGHT)
@@ -107,8 +120,3 @@ async function getCanvasSirds(text) {
 
   return canvas_grayscale
 }
-
-// import { writeFileSync } from 'fs'
-// const text = getRandomValidCode()
-// const canvas_sirds = await getCanvasSirds(text)
-// writeFileSync('test.png', canvas_sirds.toBuffer('image/png'))
