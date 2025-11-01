@@ -1,6 +1,6 @@
-const width = 992
-const height = 279
-const font = 180
+const WIDTH = 992
+const HEIGHT = 279
+const FONT = 180
 
 function myRandom(x) {
   if (x <= 0) {
@@ -13,18 +13,18 @@ function myRandom(x) {
 function coreSirds() {
   var stereo_cycles = 5
   var alpha = 3
-  var pattern_width = Math.floor(width / stereo_cycles)
+  var pattern_width = Math.floor(WIDTH / stereo_cycles)
   var canvas_grayscale = window.document.getElementById('grayscale')
   var canvas_sirds = window.document.getElementById('sirds')
   var grayscale = canvas_grayscale.getContext('2d', null)
   var sirds = canvas_sirds.getContext('2d', null)
-  sirds.clearRect(0, 0, width, height)
+  sirds.clearRect(0, 0, WIDTH, HEIGHT)
   var _g = 0
-  var _g1 = width
+  var _g1 = WIDTH
   while (_g < _g1) {
     var i = _g++
     var _g2 = 0
-    var _g3 = height
+    var _g3 = HEIGHT
     while (_g2 < _g3) {
       var j = _g2++
       var style = '#000000'
@@ -37,16 +37,16 @@ function coreSirds() {
   }
   var canvas_pattern = window.document.createElement('canvas')
   canvas_pattern.width = pattern_width
-  canvas_pattern.height = height
+  canvas_pattern.height = HEIGHT
   var context_pattern = canvas_pattern.getContext('2d', null)
-  var pattern = context_pattern.getImageData(0, 0, pattern_width, height)
+  var pattern = context_pattern.getImageData(0, 0, pattern_width, HEIGHT)
   var pixel_displace = Math.floor(pattern_width / 20)
   var _g = 0
   var _g1 = stereo_cycles
   while (_g < _g1) {
     var c = _g++
-    var disparity = grayscale.getImageData(c * pattern_width + Math.floor(pattern_width / 2), 0, pattern_width, height)
-    var pattern_sirds = sirds.getImageData(c * pattern_width, 0, pattern_width, height)
+    var disparity = grayscale.getImageData(c * pattern_width + Math.floor(pattern_width / 2), 0, pattern_width, HEIGHT)
+    var pattern_sirds = sirds.getImageData(c * pattern_width, 0, pattern_width, HEIGHT)
     var _g2 = 0
     var _g3 = 4 * disparity.data.length
     while (_g2 < _g3) {
@@ -73,13 +73,13 @@ function coreSirds() {
 }
 
 function draw() {
-  var grayscale = document.getElementById('grayscale')
   var text = document.getElementById('text').value
+  var grayscale = document.getElementById('grayscale')
   var canvas_grayscale = grayscale.getContext('2d')
   canvas_grayscale.clearRect(0, 0, grayscale.width, grayscale.height)
-  canvas_grayscale.font = font + 'px sans-serif'
+  canvas_grayscale.font = FONT + 'px sans-serif'
   var text_width = canvas_grayscale.measureText(text).width
-  canvas_grayscale.fillText(text, (width - text_width) / 2, height / 2 + font / 2)
+  canvas_grayscale.fillText(text, (WIDTH - text_width) / 2, HEIGHT / 2 + FONT / 2)
 
   var sirds = document.getElementById('sirds')
   var context_sirds = sirds.getContext('2d')
@@ -94,10 +94,10 @@ function main() {
 
   var grayscale = document.getElementById('grayscale')
   var sirds = document.getElementById('sirds')
-  grayscale.width = width
-  grayscale.height = height
-  sirds.width = width
-  sirds.height = height
+  grayscale.width = WIDTH
+  grayscale.height = HEIGHT
+  sirds.width = WIDTH
+  sirds.height = HEIGHT
 
   draw()
   coreSirds()
