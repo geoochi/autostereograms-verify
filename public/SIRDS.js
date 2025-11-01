@@ -74,16 +74,16 @@ function drawSirds() {
 
 function drawGrayScale() {
   var text = document.getElementById('text').value
-  var grayscale = document.getElementById('grayscale')
-  var canvas_grayscale = grayscale.getContext('2d')
-  canvas_grayscale.clearRect(0, 0, grayscale.width, grayscale.height)
-  canvas_grayscale.font = FONT + 'px sans-serif'
-  var text_width = canvas_grayscale.measureText(text).width
-  canvas_grayscale.fillText(text, (WIDTH - text_width) / 2, HEIGHT / 2 + FONT / 2)
+  var canvas_grayscale = document.getElementById('grayscale')
+  var context_grayscale = canvas_grayscale.getContext('2d')
+  context_grayscale.clearRect(0, 0, canvas_grayscale.width, canvas_grayscale.height)
+  context_grayscale.font = FONT + 'px sans-serif'
+  var text_width = context_grayscale.measureText(text).width
+  context_grayscale.fillText(text, (WIDTH - text_width) / 2, HEIGHT / 2 + FONT / 2)
 
-  var sirds = document.getElementById('sirds')
-  var context_sirds = sirds.getContext('2d')
-  context_sirds.clearRect(0, 0, sirds.width, sirds.height)
+  var canvas_sirds = document.getElementById('sirds')
+  var context_sirds = canvas_sirds.getContext('2d')
+  context_sirds.clearRect(0, 0, canvas_sirds.width, canvas_sirds.height)
 }
 
 function main() {
