@@ -20,8 +20,8 @@ export default async function handler(req, res) {
   const imgData = new ImageData(data, width, height)
   ctx.putImageData(imgData, 0, 0)
 
-  // 导出 PNG
-  // console.log(canvas.toDataURL())
-  res.setHeader('Content-Type', 'image/png')
-  canvas.createPNGStream().pipe(res)
+  // 导出 PNG 为 dataURL
+  const dataURL = canvas.toDataURL()
+  res.setHeader('Content-Type', 'application/json')
+  res.json({ dataURL })
 }
