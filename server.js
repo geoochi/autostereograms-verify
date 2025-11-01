@@ -1,22 +1,20 @@
 import express from 'express'
-import { fileURLToPath } from 'url'
-import { dirname, join } from 'path'
 import generateHandler from './api/generate.js'
 import verifyHandler from './api/verify.js'
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
-
 const app = express()
 const PORT = process.env.PORT || 3001
-
-// 解析 JSON 请求体
 app.use(express.json())
+app.use(express.static('.'))
 
-// 提供静态文件服务（public 目录）
-app.use(express.static(join(__dirname, 'public')))
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*')
+  res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS')
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+  res.header('Referrer-Policy', 'no-referrer-when-downgrade')
+  next()
+})
 
-// API 路由 - 生成验证码
 app.get('/api/generate', async (req, res) => {
   try {
     await generateHandler(req, res)
@@ -28,7 +26,6 @@ app.get('/api/generate', async (req, res) => {
   }
 })
 
-// API 路由 - 验证验证码
 app.post('/api/verify', async (req, res) => {
   try {
     await verifyHandler(req, res)
@@ -40,10 +37,6 @@ app.post('/api/verify', async (req, res) => {
   }
 })
 
-// 启动服务器
 app.listen(PORT, () => {
-  console.log(`🚀 Express server running at http://localhost:${PORT}`)
-  console.log(`📄 Verify page: http://localhost:${PORT}/verify.html`)
-  console.log(`🧪 Test page: http://localhost:${PORT}/index.html`)
+  console.log(`Express server running at http://localhost:${PORT}`)
 })
-

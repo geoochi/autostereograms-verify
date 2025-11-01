@@ -1,4 +1,4 @@
-import './config.js'
+import '../config.js'
 import { createCanvas, GlobalFonts } from '@napi-rs/canvas'
 import { join } from 'path'
 import { fileURLToPath } from 'url'
@@ -17,8 +17,8 @@ export default async function handler(req, res) {
   const canvas_sirds = getCanvasSirds(code)
   const dataURL = canvas_sirds.toDataURL()
   
-  // 使用 JWT 加密 code，设置 5 分钟过期时间
-  const token = jwt.sign({ code }, JWT_SECRET, { expiresIn: '5m' })
+  // 使用 JWT 加密 code，设置 1 分钟过期时间
+  const token = jwt.sign({ code }, JWT_SECRET, { expiresIn: '1m' })
   
   res.setHeader('Content-Type', 'application/json')
   res.json({ token, dataURL })

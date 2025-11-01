@@ -1,4 +1,4 @@
-import './config.js'
+import '../config.js'
 import jwt from 'jsonwebtoken'
 
 // JWT 密钥，从环境变量读取（本地使用 .env，Vercel 使用 Secrets）
