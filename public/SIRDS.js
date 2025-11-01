@@ -2,7 +2,7 @@ const WIDTH = 992
 const HEIGHT = 279
 const FONT = 180
 
-function myRandom(x) {
+function getRandom(x) {
   if (x <= 0) {
     return 0
   } else {
@@ -28,7 +28,7 @@ function drawSirds() {
     while (_g2 < _g3) {
       var j = _g2++
       var style = '#000000'
-      if (myRandom(3) != 0) {
+      if (getRandom(3) != 0) {
         style = '#FFFFFF'
       }
       context_sirds.fillStyle = style
