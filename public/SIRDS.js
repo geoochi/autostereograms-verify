@@ -11,9 +11,9 @@ function myRandom(x) {
 }
 
 function drawSirds() {
-  var stereo_cycles = 5
-  var alpha = 3
-  var pattern_width = Math.floor(WIDTH / stereo_cycles)
+  const stereo_cycles = 5
+  const alpha = 3
+  const pattern_width = Math.floor(WIDTH / stereo_cycles)
   var canvas_grayscale = document.getElementById('grayscale')
   var canvas_sirds = document.getElementById('sirds')
   var context_grayscale = canvas_grayscale.getContext('2d', null)
@@ -73,31 +73,31 @@ function drawSirds() {
 }
 
 function drawGrayScale() {
-  var text = document.getElementById('text').value
-  var canvas_grayscale = document.getElementById('grayscale')
-  var context_grayscale = canvas_grayscale.getContext('2d')
+  const text = document.getElementById('text').value
+  const canvas_grayscale = document.getElementById('grayscale')
+  const context_grayscale = canvas_grayscale.getContext('2d')
   context_grayscale.clearRect(0, 0, canvas_grayscale.width, canvas_grayscale.height)
   context_grayscale.font = FONT + 'px sans-serif'
-  var text_width = context_grayscale.measureText(text).width
+  const text_width = context_grayscale.measureText(text).width
   context_grayscale.fillText(text, (WIDTH - text_width) / 2, HEIGHT / 2 + FONT / 2)
 
-  var canvas_sirds = document.getElementById('sirds')
-  var context_sirds = canvas_sirds.getContext('2d')
+  const canvas_sirds = document.getElementById('sirds')
+  const context_sirds = canvas_sirds.getContext('2d')
   context_sirds.clearRect(0, 0, canvas_sirds.width, canvas_sirds.height)
 }
 
 function main() {
-  var params = new URLSearchParams(location.search)
-  var text = params.get('text')
+  const params = new URLSearchParams(location.search)
+  let text = params.get('text')
   if (!text || text === '') text = 'STEREO'
   document.getElementById('text').value = text
 
-  var grayscale = document.getElementById('grayscale')
-  var sirds = document.getElementById('sirds')
-  grayscale.width = WIDTH
-  grayscale.height = HEIGHT
-  sirds.width = WIDTH
-  sirds.height = HEIGHT
+  const canvas_grayscale = document.getElementById('grayscale')
+  const canvas_sirds = document.getElementById('sirds')
+  canvas_grayscale.width = WIDTH
+  canvas_grayscale.height = HEIGHT
+  canvas_sirds.width = WIDTH
+  canvas_sirds.height = HEIGHT
 
   drawGrayScale()
   drawSirds()
