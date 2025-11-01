@@ -9,7 +9,7 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 GlobalFonts.registerFromPath(join(__dirname, '../msyh.ttf'), 'myfont')
 
-// JWT 密钥，从环境变量读取（本地使用 .env，Vercel 使用 Secrets）
+// JWT secret key, read from environment variables (use .env locally, use Secrets on Vercel)
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production'
 
 export default async function handler(req, res) {
@@ -17,7 +17,7 @@ export default async function handler(req, res) {
   const canvas_sirds = getCanvasSirds(code)
   const dataURL = canvas_sirds.toDataURL()
   
-  // 使用 JWT 加密 code，设置 1 分钟过期时间
+  // Encrypt code using JWT, set 1 minute expiration time
   const token = jwt.sign({ code }, JWT_SECRET, { expiresIn: '1m' })
   
   res.setHeader('Content-Type', 'application/json')

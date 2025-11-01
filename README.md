@@ -1,120 +1,107 @@
 # Stereo Verify
 
-一个基于立体图(Stereograms)的验证码演示，用于区分人类和 LLM（大语言模型）。
+A captcha demonstration based on Stereograms, used to distinguish humans from LLMs (Large Language Models).
 
-## 📖 项目简介
+## 📖 Project Introduction
 
-Stereo Verify 使用 SIRDS 技术生成验证码图片。用户需要通过"交叉眼"（cross-eye）或"平行眼"（parallel-eye）技巧，在立体图中识别隐藏的验证码文字。这种验证方式对 LLM 来说极其困难，因为需要特殊的视觉技巧才能识别，而对人类来说相对容易。
+Stereo Verify uses SIRDS technology to generate captcha images. Users need to identify hidden captcha text in stereograms using "cross-eye" or "parallel-eye" techniques. This verification method is extremely difficult for LLMs because it requires special visual techniques to identify, while it's relatively easy for humans.
 
-### 核心特性
+### Core Features
 
-- 🎨 **SIRDS 立体图生成**：生成包含隐藏文字的立体图
-- 🔐 **JWT 加密验证**：使用 JWT token 加密验证码，确保安全性
-- 🖼️ **Base64 图片输出**：验证码图片以 Base64 格式返回，方便前端展示
-- ⏱️ **时效性验证**：验证码 token 设置 1 分钟过期时间
-- 🚀 **Vercel 就绪**：完美支持 Vercel 部署
-- 🛠️ **本地开发友好**：支持 dotenv 本地环境变量管理
+- 🎨 **SIRDS Stereogram Generation**: Generate stereograms containing hidden text
+- 🔐 **JWT Encrypted Verification**: Use JWT tokens to encrypt captcha codes, ensuring security
+- 🖼️ **Base64 Image Output**: Captcha images are returned in Base64 format for easy frontend display
+- ⏱️ **Time-Limited Verification**: Captcha tokens are set to expire after 1 minute
+- 🚀 **Vercel Ready**: Perfect support for Vercel deployment
+- 🛠️ **Local Development Friendly**: Supports dotenv for local environment variable management
 
-## 🎯 验证码验证页面 👉 https://stereo-verify.vercel.app
+## 🎯 Captcha Verification Page 👉 https://stereo-verify.vercel.app
 
-主要的验证码验证界面，包含：
+Main captcha verification interface, including:
 
-- **验证码生成**：自动从 API 获取验证码图片和加密 token
-- **用户输入**：提供输入框供用户输入识别到的验证码
-- **实时验证**：调用验证 API 检查用户输入是否正确
-- **结果反馈**：清晰显示验证成功或失败信息
-- **刷新功能**：支持重新获取新的验证码
+- **Captcha Generation**: Automatically fetches captcha images and encrypted tokens from the API
+- **User Input**: Provides an input box for users to enter the identified captcha code
+- **Real-time Verification**: Calls the verification API to check if user input is correct
+- **Result Feedback**: Clearly displays verification success or failure messages
+- **Refresh Function**: Supports fetching new captcha codes
 
-**使用方法**：
+**How to Use**:
 
-1. 页面加载时自动获取验证码图片
-2. 使用"交叉眼"或"平行眼"技巧查看立体图中的隐藏文字
-3. 在输入框中输入识别到的验证码（4 位大写字母和数字）
-4. 点击"验证"按钮或按回车键提交
-5. 查看验证结果
+1. The page automatically fetches a captcha image when loaded
+2. Use "cross-eye" or "parallel-eye" techniques to view the hidden text in the stereogram
+3. Enter the identified captcha code in the input box (4 uppercase letters and numbers)
+4. Click the "verify" button or press Enter to submit
+5. View the verification result
 
-## 🚀 快速开始
+## 🚀 Quick Start
 
-### 环境要求
+### Requirements
 
 - Node.js 16+
 - pnpm 10+
 
-### 本地开发
+### Local Development
 
-1. **克隆项目**
+1. **Clone the project**
 
    ```bash
    git clone https://github.com/geoochi/stereo-verify
    cd stereo-verify
    ```
 
-2. **安装依赖**
+2. **Install dependencies**
 
    ```bash
    pnpm install
    ```
 
-3. **配置环境变量**
+3. **Configure environment variables**
 
    ```bash
    cp .env.example .env
    ```
 
-   编辑 `.env` 文件，设置 JWT 密钥：
+   Edit the `.env` file and set the JWT secret key:
 
    ```
    JWT_SECRET=your-strong-secret-key-here
    ```
 
-   > 💡 建议使用至少 32 个字符的强密码
+   > 💡 It is recommended to use a strong password with at least 32 characters
 
-4. **启动开发服务器**
+4. **Start the development server**
 
-   **使用 Express 开发服务器（推荐）**：
+   **Using Express development server (recommended)**:
 
    ```bash
    pnpm dev
    ```
 
-5. **访问页面**
+5. **Access the page**
 
-   - 验证码验证页面：`http://localhost:3001`
+   - Captcha verification page: `http://localhost:3001`
 
-## 🌐 Vercel 部署
+## 🌐 Vercel Deployment
 
-### 1. 准备项目
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/geoochi/stereo-verify)
 
-确保项目已推送到 Git 仓库（GitHub、GitLab 等）
+### 3. Configure environment variables
 
-### 2. 部署到 Vercel
+Add environment variables in Vercel project settings:
 
-1. 登录 [Vercel Dashboard](https://vercel.com/dashboard)
-2. 点击 **Add New Project**
-3. 导入你的 Git 仓库
-4. Vercel 会自动检测项目配置
-
-### 3. 配置环境变量
-
-在 Vercel 项目设置中添加环境变量：
-
-1. 进入项目 **Settings** → **Environment Variables**
-2. 添加环境变量：
+1. Go to project **Settings** → **Environment Variables**
+2. Add environment variable:
    - **Name**: `JWT_SECRET`
-   - **Value**: 你的 JWT 密钥（建议使用强密码）
-   - **Environment**: 选择需要应用的环境
-     - ✅ Production（生产环境）
-     - ✅ Preview（预览环境）
-     - ✅ Development（开发环境）
-3. 点击 **Save**
+   - **Value**: Your JWT secret key (recommend using a strong password)
+3. Click **Save**
 
-## 📡 API 文档
+## 📡 API Documentation
 
 ### `GET /api/generate`
 
-生成验证码图片和加密 token。
+Generate captcha image and encrypted token.
 
-**响应示例**：
+**Response Example**:
 
 ```json
 {
@@ -123,16 +110,16 @@ Stereo Verify 使用 SIRDS 技术生成验证码图片。用户需要通过"交�
 }
 ```
 
-**字段说明**：
+**Field Description**:
 
-- `token`: JWT 加密的 token，包含验证码信息（1 分钟过期）
-- `dataURL`: Base64 编码的验证码图片（PNG 格式）
+- `token`: JWT encrypted token containing captcha information (expires in 1 minute)
+- `dataURL`: Base64 encoded captcha image (PNG format)
 
 ### `POST /api/verify`
 
-验证用户输入的验证码。
+Verify the user's input captcha code.
 
-**请求体**：
+**Request Body**:
 
 ```json
 {
@@ -141,50 +128,50 @@ Stereo Verify 使用 SIRDS 技术生成验证码图片。用户需要通过"交�
 }
 ```
 
-**成功响应**（200）：
+**Success Response** (200):
 
 ```json
 {
   "success": true,
-  "message": "验证成功"
+  "message": "Verification successful"
 }
 ```
 
-**失败响应**（400）：
+**Failure Response** (400):
 
 ```json
 {
   "success": false,
-  "error": "验证码不正确"
+  "error": "Incorrect verification code"
 }
 ```
 
-**错误类型**：
+**Error Types**:
 
-- `验证码不正确`：用户输入的验证码与 token 中的不匹配
-- `验证码已过期`：token 已超过 1 分钟有效期
-- `无效的 token`：token 格式错误或已被篡改
+- `Incorrect verification code`: The user's input code does not match the code in the token
+- `Verification code expired`: The token has exceeded the 1-minute validity period
+- `Invalid token`: The token format is incorrect or has been tampered with
 
-## 🔬 如何查看立体图
+## 🔬 How to View Stereograms
 
-### 交叉眼法（Cross-eye）
+### Cross-Eye Method
 
-1. 将图片放在距离眼睛约 30-40cm 的位置
-2. 放松眼睛，让视线"穿过"屏幕看向远方
-3. 当双眼焦点分离时，你会看到隐藏的文字浮现在图片上
+1. Place the image at a distance of about 30-40cm from your eyes
+2. Relax your eyes and let your gaze "pass through" the screen to look into the distance
+3. When your eyes' focus separates, you will see the hidden text floating above the image
 
-### 平行眼法（Parallel-eye）
+### Parallel-Eye Method
 
-1. 将图片放在稍远的距离
-2. 保持双眼平行，看向图片后方
-3. 隐藏的文字会浮现出来
+1. Place the image at a slightly farther distance
+2. Keep your eyes parallel and look behind the image
+3. The hidden text will appear
 
-> 💡 提示：对于初学者，建议从较大的图片或较远的距离开始练习。
+> 💡 Tip: For beginners, it is recommended to start with larger images or from a greater distance.
 
-## 📖 参考
+## 📖 References
 
-本项目基于 SIRDS（Single Image Random Dot Stereograms）算法实现。
+This project is based on the SIRDS (Single Image Random Dot Stereograms) algorithm.
 
 - https://www.ime.usp.br/~otuyama/stereogram/gallery/sirds/sirds.html
 
-**注意**：本项目旨在提供一种有趣的验证码解决方案，但不应作为唯一的安全验证手段。在实际应用中，建议与其他安全措施（如速率限制、IP 检查等）结合使用。
+**Note**: This project aims to provide an interesting captcha solution, but should not be used as the only security verification method. In practical applications, it is recommended to combine it with other security measures (such as rate limiting, IP checking, etc.).

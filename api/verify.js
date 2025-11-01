@@ -1,7 +1,7 @@
 import '../config.js'
 import jwt from 'jsonwebtoken'
 
-// JWT 密钥，从环境变量读取（本地使用 .env，Vercel 使用 Secrets）
+// JWT secret key, read from environment variables (use .env locally, use Secrets on Vercel)
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production'
 
 export default async function handler(req, res) {
@@ -18,27 +18,27 @@ export default async function handler(req, res) {
   }
 
   try {
-    // 验证 JWT token
+    // Verify JWT token
     const decoded = jwt.verify(token, JWT_SECRET)
     
-    // 比较用户输入的 code 与 token 中的 code
+    // Compare user input code with code in token
     if (decoded.code === code) {
       res.setHeader('Content-Type', 'application/json')
-      return res.json({ success: true, message: '验证成功' })
+      return res.json({ success: true, message: 'Verification successful' })
     } else {
       res.setHeader('Content-Type', 'application/json')
-      return res.status(400).json({ success: false, error: '验证码不正确' })
+      return res.status(400).json({ success: false, error: 'Incorrect verification code' })
     }
   } catch (error) {
     if (error.name === 'TokenExpiredError') {
       res.setHeader('Content-Type', 'application/json')
-      return res.status(400).json({ success: false, error: '验证码已过期' })
+      return res.status(400).json({ success: false, error: 'Verification code expired' })
     } else if (error.name === 'JsonWebTokenError') {
       res.setHeader('Content-Type', 'application/json')
-      return res.status(400).json({ success: false, error: '无效的 token' })
+      return res.status(400).json({ success: false, error: 'Invalid token' })
     } else {
       res.setHeader('Content-Type', 'application/json')
-      return res.status(500).json({ success: false, error: '验证失败' })
+      return res.status(500).json({ success: false, error: 'Verification failed' })
     }
   }
 }

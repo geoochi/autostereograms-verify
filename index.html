@@ -3,29 +3,30 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>验证码验证</title>
+    <meta name="color-scheme" content="dark light" />
+    <title>Stereo Verify</title>
   </head>
 
   <body onload="loadImage()" style="margin: 0; padding: 20px">
     <div style="display: flex; justify-content: center; flex-direction: column; min-height: 100vh; align-items: center">
-      <h1>验证码验证</h1>
-      <button onclick="loadImage()" style="margin-bottom: 20px; padding: 10px 20px; font-size: 16px">刷新验证码</button>
-      <div id="loading" style="display: none; margin-bottom: 20px">加载中...</div>
+      <h1>Stereo Verify</h1>
+      <div id="loading" style="display: none; margin-bottom: 20px">loading...</div>
       <div id="error" style="display: none; color: red; margin-bottom: 20px"></div>
       <img id="image" style="max-width: 100%; max-height: 50vh; border: 1px solid #ccc; margin-bottom: 20px" />
       
-      <div style="display: flex; flex-direction: column; align-items: center; gap: 15px; min-width: 300px">
+      <div style="display: flex; align-items: center; gap: 15px; min-width: 300px">
+        <button onclick="loadImage()" style="padding: 10px 20px; font-size: 16px; width: 100px;">refresh</button>
         <input
           id="codeInput"
           type="text"
-          placeholder="请输入验证码"
-          style="padding: 10px; font-size: 18px; text-align: center; width: 100%; box-sizing: border-box; text-transform: uppercase"
+          placeholder="valid code"
+          style="padding: 10px; font-size: 18px; text-align: center; width: 300px; box-sizing: border-box; text-transform: uppercase"
           maxlength="4"
           onkeypress="handleKeyPress(event)"
         />
-        <button onclick="verifyCode()" style="padding: 10px 30px; font-size: 16px; cursor: pointer">验证</button>
-        <div id="verifyResult" style="min-height: 30px; margin-top: 10px"></div>
+        <button onclick="verifyCode()" style="padding: 10px 30px; font-size: 16px; cursor: pointer; width: 100px;">verify</button>
       </div>
+      <div id="verifyResult" style="min-height: 30px; margin-top: 10px"></div>
     </div>
 
     <script>
@@ -38,7 +39,7 @@
         const codeInput = document.getElementById('codeInput')
         const verifyResult = document.getElementById('verifyResult')
 
-        // 显示加载状态
+        // Display loading state
         loadingEl.style.display = 'block'
         errorEl.style.display = 'none'
         imageEl.style.display = 'none'
@@ -47,7 +48,7 @@
         currentToken = null
 
         try {
-          // 从 API 获取数据
+          // Get data from API
           const response = await fetch('/api/generate')
           if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`)
@@ -61,7 +62,7 @@
           codeInput.focus()
         } catch (error) {
           console.error('Error loading image:', error)
-          errorEl.textContent = `错误: ${error.message}`
+          errorEl.textContent = `Error: ${error.message}`
           errorEl.style.display = 'block'
           loadingEl.style.display = 'none'
         }
@@ -73,16 +74,16 @@
         const code = codeInput.value.trim().toUpperCase()
 
         if (!code) {
-          verifyResult.innerHTML = '<div style="color: red">请输入验证码</div>'
+          verifyResult.innerHTML = '<div style="color: red">Please input valid code</div>'
           return
         }
 
         if (!currentToken) {
-          verifyResult.innerHTML = '<div style="color: red">请先加载验证码</div>'
+          verifyResult.innerHTML = '<div style="color: red">Please load valid first</div>'
           return
         }
 
-        verifyResult.innerHTML = '<div>验证中...</div>'
+        verifyResult.innerHTML = '<div>verifying...</div>'
 
         try {
           const response = await fetch('/api/verify', {
@@ -96,13 +97,13 @@
           const data = await response.json()
 
           if (data.success) {
-            verifyResult.innerHTML = '<div style="color: green; font-size: 18px; font-weight: bold">✓ 验证成功！</div>'
+            verifyResult.innerHTML = '<div style="color: green; font-size: 18px; font-weight: bold">✓ Success!</div>'
           } else {
-            verifyResult.innerHTML = `<div style="color: red">${data.error || '验证失败'}</div>`
+            verifyResult.innerHTML = `<div style="color: red">${data.error || 'Failed'}</div>`
           }
         } catch (error) {
           console.error('Error verifying code:', error)
-          verifyResult.innerHTML = `<div style="color: red">验证出错: ${error.message}</div>`
+          verifyResult.innerHTML = `<div style="color: red">Verify error: ${error.message}</div>`
         }
       }
 
