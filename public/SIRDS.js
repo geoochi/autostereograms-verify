@@ -14,8 +14,8 @@ function coreSirds() {
   var stereo_cycles = 5
   var alpha = 3
   var pattern_width = Math.floor(WIDTH / stereo_cycles)
-  var canvas_grayscale = window.document.getElementById('grayscale')
-  var canvas_sirds = window.document.getElementById('sirds')
+  var canvas_grayscale = document.getElementById('grayscale')
+  var canvas_sirds = document.getElementById('sirds')
   var grayscale = canvas_grayscale.getContext('2d', null)
   var sirds = canvas_sirds.getContext('2d', null)
   sirds.clearRect(0, 0, WIDTH, HEIGHT)
@@ -35,7 +35,7 @@ function coreSirds() {
       sirds.fillRect(i, j, 1, 1)
     }
   }
-  var canvas_pattern = window.document.createElement('canvas')
+  var canvas_pattern = document.createElement('canvas')
   canvas_pattern.width = pattern_width
   canvas_pattern.height = HEIGHT
   var context_pattern = canvas_pattern.getContext('2d', null)
@@ -87,7 +87,7 @@ function draw() {
 }
 
 function main() {
-  var params = new URLSearchParams(window.location.search)
+  var params = new URLSearchParams(location.search)
   var text = params.get('text')
   if (!text || text === '') text = 'STEREO'
   document.getElementById('text').value = text
