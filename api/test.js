@@ -1,18 +1,11 @@
 import { createCanvas } from '@napi-rs/canvas'
 
 export default async function handler(req, res) {
-  let text = null
-  if (req.method === 'POST') {
-    const body = typeof req.body === 'string' ? JSON.parse(req.body) : req.body
-    text = body.text || text
-  } else if (req.method === 'GET') {
-    text = req.query?.text || text
-  }
-
+  const text = getRandomValidCode()
   const canvas_sirds = getCanvasSirds(text)
   const dataURL = canvas_sirds.toDataURL()
   res.setHeader('Content-Type', 'application/json')
-  res.json({ dataURL })
+  res.json({ text, dataURL })
 }
 
 function getRandomValidCode() {
@@ -38,11 +31,10 @@ function getRandom(x) {
   }
 }
 
-function getCanvasSirds(text = null) {
+function getCanvasSirds(text) {
   const WIDTH = 992
   const HEIGHT = 279
   const FONT = 180
-  text = !text || text === '' || text.length > 4 ? getRandomValidCode() : text
 
   const canvas_grayscale = createCanvas(WIDTH, HEIGHT)
   const context_grayscale = canvas_grayscale.getContext('2d')
@@ -115,5 +107,5 @@ function getCanvasSirds(text = null) {
 }
 
 // import { writeFileSync } from 'fs'
-// const canvas_sirds = getCanvasSirds()
+// const canvas_sirds = getCanvasSirds(getRandomValidCode())
 // writeFileSync('test.png', canvas_sirds.toBuffer('image/png'))
