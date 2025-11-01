@@ -1,0 +1,16 @@
+{
+  "packageManager": "pnpm@10.17.0",
+  "name": "stereo-verify",
+  "type": "module",
+  "scripts": {
+    "approve-builds": "pnpm approve-builds",
+    "build": "echo 'No build needed'",
+    "vercel-build": "pnpm approve-builds && pnpm run build"
+  },
+  "dependencies": {
+    "canvas": "^3.2.0"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
