@@ -5,7 +5,9 @@ import { fileURLToPath } from 'url'
 import { dirname } from 'path'
 import jwt from 'jsonwebtoken'
 
-GlobalFonts.registerFromPath('./msyh.ttf', 'myfont')
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
+GlobalFonts.registerFromPath(join(__dirname, './msyh.ttf'), 'myfont')
 
 // JWT secret key, read from environment variables (use .env locally, use Secrets on Vercel)
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production'
