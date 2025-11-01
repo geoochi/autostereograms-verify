@@ -5,7 +5,7 @@ import { dirname } from 'path'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
-GlobalFonts.registerFromPath(join(__dirname, '../fonts/CascadiaCode.ttf'), 'CascadiaCode')
+GlobalFonts.registerFromPath(join(__dirname, '../fonts/msyh.ttf'), 'myfont')
 
 export default async function handler(req, res) {
   const text = getRandomValidCode()
@@ -30,6 +30,11 @@ function getRandomValidCode() {
   return code
 }
 
+function getChineseValidCode() {
+  const validCharsList = ['云吞汤面', '飘香拌面', '刀削面', '牛肉面']
+  return validCharsList[Math.floor(Math.random() * validCharsList.length)]
+}
+
 function getRandom(x) {
   if (x <= 0) {
     return 0
@@ -41,14 +46,14 @@ function getRandom(x) {
 function getCanvasSirds(text) {
   const WIDTH = 992
   const HEIGHT = 279
-  const FONT = 180
+  const FONT = 200
 
   const canvas_grayscale = createCanvas(WIDTH, HEIGHT)
   const context_grayscale = canvas_grayscale.getContext('2d')
   context_grayscale.clearRect(0, 0, canvas_grayscale.width, canvas_grayscale.height)
-  context_grayscale.font = FONT + 'px CascadiaCode'
+  context_grayscale.font = FONT + 'px myfont'
   const text_width = context_grayscale.measureText(text).width
-  context_grayscale.fillText(text, (WIDTH - text_width) / 2, HEIGHT / 2 + FONT / 2)
+  context_grayscale.fillText(text, (WIDTH - text_width) / 2, HEIGHT / 2 + FONT / 2.7)
 
   const canvas_sirds = createCanvas(WIDTH, HEIGHT)
   const context_sirds = canvas_sirds.getContext('2d')
@@ -114,8 +119,7 @@ function getCanvasSirds(text) {
 }
 
 // import { writeFileSync } from 'fs'
-// const text = getRandomValidCode()
+// const text = getChineseValidCode()
 // const canvas_sirds = getCanvasSirds(text)
-// writeFileSync('test.png', canvas_sirds.toBuffer('image/png'))
-// console.log(canvas_sirds.toDataURL())
 // console.log(text)
+// writeFileSync('test.png', canvas_sirds.toBuffer('image/png'))
