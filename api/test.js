@@ -38,6 +38,6 @@ function core(text = null) {
   return canvas
 }
 
-import { writeFileSync } from 'fs'
-var canvas = core()
-writeFileSync('test.png', canvas.toBuffer('image/png'))
+// import { writeFileSync } from 'fs'
+// var canvas = core()
+// writeFileSync('test.png', canvas.toBuffer('image/png'))
