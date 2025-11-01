@@ -1,9 +1,8 @@
 function onload() {
-  var search = window.location.search
-  if (search != null && search.substr(0, 6) == '?text=') {
-    var text = search.substr(6)
-    document.getElementById('text').value = text.replace(/\+/g, ' ')
-  }
+  var params = new URLSearchParams(window.location.search)
+  var text = params.get('text')
+  if (!text || text === '') text = 'STEREO'
+  document.getElementById('text').value = text
 
   var grayscale = document.getElementById('grayscale')
   var sirds = document.getElementById('sirds')
@@ -14,4 +13,18 @@ function onload() {
 
   draw()
   coreSirds()
+}
+
+function draw() {
+  var grayscale = document.getElementById('grayscale')
+  var text = document.getElementById('text').value
+  var context = grayscale.getContext('2d')
+  context.clearRect(0, 0, grayscale.width, grayscale.height)
+  context.font = font + 'px sans-serif'
+  var text_width = context.measureText(text).width
+  context.fillText(text, (width - text_width) / 2, height / 2 + font / 2)
+
+  var sirds = document.getElementById('sirds')
+  var context_sirds = sirds.getContext('2d')
+  context_sirds.clearRect(0, 0, sirds.width, sirds.height)
 }
