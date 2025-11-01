@@ -16,7 +16,7 @@ export default async function handler(req, res) {
 }
 
 function getRandomValidCode() {
-  const validChars = '23456789abcdefghjkmnpqrstuvwxyzABCDEFGHJKMNPQRSTUVWXYZ'
+  const validChars = '23456789ABCDEFGHJKMNPQRSTUVWXYZ'
   const charLength = validChars.length
   let code = ''
   const validLength = 4
