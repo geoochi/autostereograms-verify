@@ -103,7 +103,7 @@ async function getCanvasSirds(text) {
     context_sirds.drawImage(canvas_pattern, (c + 1) * pattern_width - pixel_displace, 0)
   }
 
-  return canvas_sirds
+  return canvas_grayscale
 }
 
 // import { writeFileSync } from 'fs'
